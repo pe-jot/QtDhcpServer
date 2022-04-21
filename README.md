@@ -1,36 +1,17 @@
 ## Introduction
 
-QtCIV is a [Qt](https://www.qt.io/) C++ implementation of ICOM's CI-V protocol.
+QtDhcpServer is a basic implmentation based on [Qt](https://www.qt.io/) framework, its base idea origins from https://github.com/justinmcbride/qt_dhcp_server.
 
-Altough primarily developed on Windows platform, it is cross-platform compatible as it is using Qt framework.
+The main purpose is for running in isolated testing environments and it is **NOT** intended to run in productive environment!
+Also, it might not (fully) comply with [RFC 2131](https://tools.ietf.org/html/rfc2131).
 
-The applications provided are mainly intended to provide some basic functionality to communicate with [ICOM IC-705](https://www.icomjapan.com/lineup/products/IC-705/) amateur radio transceiver.
-Similar devices like IC-7300, IC-9700,... may be supported as well. Please cross-check with the corresponding [CI-V reference manuals](https://www.icomjapan.com/support/manual/).
+![Screenshot QtDhcpServer running](QtDhcpServer_Running.png)
 
-## Project organization
+## Notes
+Settings are saved using the `QSettings` class, thus their behaviour is platform dependent (see [QSettings](https://doc.qt.io/qt-5.15/qsettings.html) reference).
+The recently used network interface is saved on program exit, other settings like IP range are saved on button click.
 
-### libCIV
-Library containing basic CI-V protocol functionality.
+Static assignments are currently read from settings only, a saving mechanism is implemented but not available to the GUI yet.
 
-### libCIVTest
-Qt Unit test project for libCIV.
-
-### RemoteControl
-A Qt QML based demo project making use of most of the functionality currently implemented in libCIV.  
-![Screenshot RemoteControl GUI](RemoteControl.png)
-
-### SatSync
-A Qt Widgets based project used to synchronize transmit frequency corresponding to receive frequency shift when making satellite communication (compensating Doppler shift).
-
-The intended usecase is that one tunes to the exact receiving frequency on the transmitter and the software calculates the correct transmit frequency and sets it then on the device.
-The transmit frequency is being calculated as follows:  
-![Doppler shift formula](DopplerShiftFormula.png)
-
-Windows GUI (with transmitter connected):  
-![Screenshot SatSync GUI](SatSync.png)
-
-Linux / Ubuntu GUI (no connection to transceiver):  
-![Screenshot SatSync GUI Ubuntu](SatSync_Ubuntu.png)
-
-### CIVBridge
-Please see [RemoteTRX](https://github.com/pe-jot/RemoteTRX) for details.
+The software has been developed & tested in Windows 10 environment, thus adaptions to other GUI platforms might be necessary.
+Software has been designed in a way to make operation on command line possible, however an CLI needs to be implemented upon your needs.
