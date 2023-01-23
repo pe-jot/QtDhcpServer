@@ -63,4 +63,5 @@ private slots:
     void onQuitAction();
     void onSelectedNetworkInterfaceChanged(int index);
     void onServerStateChange(bool newState);
+    void onAssignmentsTableViewDoubleClicked(const QModelIndex &index);
 };

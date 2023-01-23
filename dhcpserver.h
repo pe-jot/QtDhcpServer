@@ -19,6 +19,8 @@ public:
     QStandardItemModel* staticAssignmentsItemModel() const;
     QStandardItemModel* dynamicAssignmentsItemModel() const;
 
+    void releaseClient(QStandardItem* pMacAddress);
+
 signals:
 
 public slots:

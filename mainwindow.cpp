@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonServerState, &QPushButton::toggled, this, &MainWindow::onServerStateChange);
     connect(ui->buttonRestoreDefaultSettings, &QPushButton::clicked, this, &MainWindow::makeSettingSuggestion);
     connect(ui->buttonSaveSettings, &QPushButton::clicked, this, &MainWindow::saveSettings);
+    connect(ui->dynamicAssignmentsTableView, &QAbstractItemView::doubleClicked, this, &MainWindow::onAssignmentsTableViewDoubleClicked);
+    connect(ui->staticAssignmentsTableView, &QAbstractItemView::doubleClicked, this, &MainWindow::onAssignmentsTableViewDoubleClicked);
 }
 
 MainWindow::~MainWindow()
@@ -284,4 +286,21 @@ void MainWindow::onServerStateChange(bool newState)
 
     auto trayiconText = QString("%1 %2").arg(defaultTrayIconText, newState ? "running" : "stopped");
     mpTrayIcon->setToolTip(trayiconText);
+}
+
+void MainWindow::onAssignmentsTableViewDoubleClicked(const QModelIndex &index)
+{
+    if (index.column() != 2)
+    {
+        // Only a double click on the state column can release the DHCP assignment. Ignore all other columns
+        return;
+    }
+
+    // This slot is attached to two list boxes, so we have to determine the sender's data
+    QStandardItemModel* pItemModel = (sender() == ui->dynamicAssignmentsTableView)
+            ? mpServer->dynamicAssignmentsItemModel()
+            : mpServer->staticAssignmentsItemModel();
+
+    auto mac = pItemModel->item(index.row(), 1);
+    mpServer->releaseClient(mac);
 }

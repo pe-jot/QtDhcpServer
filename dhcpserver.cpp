@@ -72,6 +72,18 @@ void DhcpServer::readPendingDatagrams()
     }
 }
 
+void DhcpServer::releaseClient(QStandardItem* pMacAddress)
+{
+    if (mpAssignmentsManager)
+    {
+        auto mac = MacAddress(pMacAddress->text());
+        if (!mac.isEmpty())
+        {
+            mpAssignmentsManager->releaseAssignment(mac);
+        }
+    }
+}
+
 void DhcpServer::performOffer(DhcpMessage &request)
 {
     /*
