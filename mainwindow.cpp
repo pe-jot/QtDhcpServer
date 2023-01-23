@@ -140,7 +140,7 @@ void MainWindow::makeSettingSuggestion()
 
 void MainWindow::saveSettings()
 {
-	// Windows: see Registry: Computer\HKEY_CURRENT_USER\SOFTWARE\pe-jot\DHCP Server
+    // Windows: see Registry: Computer\HKEY_CURRENT_USER\SOFTWARE\<username>\DHCP Server
     mpSettings->beginGroup(mSelectedInterfaceAddress.toString());
     mpSettings->setValue(startAddressKey, ui->lineEditStartAddress->text());
     mpSettings->setValue(endAddressKey, ui->lineEditEndAddress->text());
@@ -279,7 +279,7 @@ void MainWindow::onServerStateChange(bool newState)
 
     setUiEnable(!newState);
 
-    auto buttonText = QString("Server %1").arg(newState ? "RUNNING" : "STOPPED");
+    auto buttonText = QString("%1 server").arg(newState ? "Stop" : "Start");
     ui->buttonServerState->setText(buttonText);
 
     auto trayiconText = QString("%1 %2").arg(defaultTrayIconText, newState ? "running" : "stopped");
