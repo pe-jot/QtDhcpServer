@@ -45,7 +45,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 # Pack all necessary modules into output directory on release build
 CONFIG(release, debug|release): {
-    win32: QMAKE_POST_LINK += $(QTDIR)/bin/windeployqt.exe --no-translations --no-system-d3d-compiler --no-webkit2 --no-opengl-sw --no-angle --no-virtualkeyboard $$OUT_PWD/release
+    win32: {
+        RC_ICONS = Connected.ico
+        QMAKE_POST_LINK += $(QTDIR)/bin/windeployqt.exe --no-translations --no-system-d3d-compiler --no-webkit2 --no-opengl-sw --no-angle --no-virtualkeyboard $$OUT_PWD/release
+    }
 }
 
 DISTFILES +=
