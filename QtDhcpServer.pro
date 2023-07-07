@@ -47,7 +47,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 CONFIG(release, debug|release): {
     win32: {
         RC_ICONS = Connected.ico
-        QMAKE_POST_LINK += $(QTDIR)/bin/windeployqt.exe --no-translations --no-system-d3d-compiler --no-webkit2 --no-opengl-sw --no-angle --no-virtualkeyboard $$OUT_PWD/release
+	QMAKE_POST_LINK += $(QTDIR)/bin/windeployqt.exe --no-translations --no-system-d3d-compiler --no-webkit2 --no-opengl-sw --no-angle --no-virtualkeyboard $$OUT_PWD/release
     }
 }
 
@@ -55,3 +55,5 @@ DISTFILES +=
 
 RESOURCES += \
     Icons.qrc
+
+VERSION = 1.0.0.0
