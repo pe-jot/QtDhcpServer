@@ -52,11 +52,7 @@ void DhcpMessage::parseOption(QByteArray& data)
     while(data.size())
     {
         auto optionType = DhcpOption::getOption(data.at(0));
-        if (optionType == DhcpOption::UNKNOWN)
-        {
-            qDebug() << "uh oh";
-        }
-        qDebug() << "--->[" << DhcpOption::toString(optionType) << "]";
+        qDebug() << "--->[" << DhcpOption::toString(data.at(0)) << "]";
         data.remove(0, 1);
         if (optionType == DhcpOption::PAD)
         {
@@ -158,7 +154,7 @@ void DhcpMessage::parseOption(QByteArray& data)
             quint8 optionLength = data.at(0);
             data.remove(0, 1);
 
-            qDebug() << "Removing " << int(optionLength);
+            qDebug() << "Removing " << int(optionLength) << "Bytes";
             data.remove(0, optionLength);
         }
     }
