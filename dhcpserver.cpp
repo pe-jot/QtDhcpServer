@@ -149,6 +149,7 @@ void DhcpServer::performAcknowledge(DhcpMessage &request)
 
     if (clientAssignedIP != clientIP)
     {
+        qDebug() << "Release assignment due to IP address mismatch:" << clientAssignedIP.toString() << clientIP.toString();
         mpAssignmentsManager->releaseAssignment(clientMAC);
         mpSocket->writeDatagram(DhcpMessage::createNAK().serialize(), QHostAddress::Broadcast, bootp::DHCP_CLIENT_PORT);
         return;
