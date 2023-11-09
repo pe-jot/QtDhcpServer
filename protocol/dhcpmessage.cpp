@@ -20,6 +20,11 @@ DhcpMessage::DhcpMessage(QByteArray messageData, QObject *parent)
         return;
     }
 
+    if (mHeader.ciaddr > 0)
+    {
+        mAddressClient = QHostAddress(mHeader.ciaddr);
+    }
+
     parseOption(messageData);
 }
 

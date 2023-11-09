@@ -18,7 +18,6 @@ bool bootp::deserialize(QByteArray data)
     QDataStream stream(data);
 
     quint8 op, htype;
-    quint32 ciaddr, yiaddr, siaddr, giaddr;
 
     stream >>
         op >> htype >> hardwareAddressLength >> hops >>

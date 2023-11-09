@@ -18,11 +18,15 @@ enum class BootpHwType : quint8
 
 struct bootp
 {
-    /*
+/* See also: https://datatracker.ietf.org/doc/html/rfc951
     struct bootp_header_t {
-        uint8_t op; uint8_t htype; uint8_t hlen; uint8_t hops;
+        uint8_t op;
+        uint8_t htype;
+        uint8_t hlen;
+        uint8_t hops;
         uint32_t xid;
-        uint16_t secs;    uint16_t flags;
+        uint16_t secs;
+        uint16_t flags;
         uint32_t ciaddr;
         uint32_t yiaddr;
         uint32_t siaddr;    // IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
@@ -32,7 +36,7 @@ struct bootp
         uint8_t file[128]; // Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully qualified directory-path name in DHCPOFFER
         uint8_t cookie[4];
     };
-    */
+*/
 
 public:
     bootp();
