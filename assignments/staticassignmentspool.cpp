@@ -26,11 +26,14 @@ QHostAddress StaticAssignmentsPool::offerAssignment(const MacAddress &mac)
     auto staticAssignments = assignments();
     for (auto assignment = staticAssignments.begin(); assignment != staticAssignments.end(); ++assignment)
     {
-        if ((*assignment)->mac() == mac)
+        const auto assignmentMac = (*assignment)->mac();
+        if (assignmentMac == mac)
         {
-            (*assignment)->setOffered(mac);
+            // Partially or fully specified MAC address match
+            (*assignment)->setOffered(assignmentMac.isMasked() ? assignmentMac : mac);
             return (*assignment)->ip();
         }
+
     }
     return QHostAddress::Null; // Not found
 }

@@ -13,3 +13,5 @@ Settings like last selected interface, IP range, etc. are saved using the `QSett
 The recently selected network interface is saved before program exit. Other settings have to be saved manually using the corresponding button.
 
 Static assignments are a way to assign a fixed IP address to a specific client and are also loaded through the same mechanism. A saving routine is implemented, however not available to the GUI ;-)
+
+If a MAC address of a static assignment ends with "00:00:00", it is treated as a wildcard. Thus, all devices of the specified vendor will get the assigned IP address. This might be useful for certain testing purposes.

@@ -55,9 +55,23 @@ QByteArray MacAddress::data() const
     return mRawAddress;
 }
 
+QByteArray MacAddress::OUI() const
+{
+    return mRawAddress.left(3);
+}
+
 bool MacAddress::isEmpty() const
 {
     return mRawAddress.isEmpty();
+}
+
+bool MacAddress::isMasked() const
+{
+    if (mRawAddress.length() < 6)
+    {
+        return false;
+    }
+    return (mRawAddress[3] == 0 && mRawAddress[4] == 0 && mRawAddress[5] == 0);
 }
 
 void MacAddress::clear()
