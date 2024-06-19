@@ -232,6 +232,26 @@
         </attribute>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="chkShowDebugOutput">
+        <property name="text">
+         <string>Show debug output</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="debugOutputText">
+        <property name="font">
+         <font>
+          <family>Consolas</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>

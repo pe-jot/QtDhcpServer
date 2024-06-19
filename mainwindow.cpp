@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     , defaultTrayIconText(QCoreApplication::applicationName())
 {
     ui->setupUi(this);
+    ui->debugOutputText->hide();
 
     ui->lineEditSubnetmask->setValidator(new QRegExpValidator(ipAddressRegex));
     ui->lineEditStartAddress->setValidator(new QRegExpValidator(ipAddressRegex));
@@ -37,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonSaveSettings, &QPushButton::clicked, this, &MainWindow::saveSettings);
     connect(ui->dynamicAssignmentsTableView, &QAbstractItemView::doubleClicked, this, &MainWindow::onAssignmentsTableViewDoubleClicked);
     connect(ui->staticAssignmentsTableView, &QAbstractItemView::doubleClicked, this, &MainWindow::onAssignmentsTableViewDoubleClicked);
+    connect(ui->chkShowDebugOutput, &QCheckBox::stateChanged, this, &MainWindow::onCheckShowDebugOutputChanged);
 }
 
 MainWindow::~MainWindow()
@@ -303,4 +305,38 @@ void MainWindow::onAssignmentsTableViewDoubleClicked(const QModelIndex &index)
 
     auto mac = pItemModel->item(index.row(), 1);
     mpServer->releaseClient(mac);
+}
+
+QtMessageHandler defaultMessageHandler = nullptr;
+QPlainTextEdit *guiLogWindow = nullptr;
+
+void logToGui(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    if (guiLogWindow)
+    {
+        const auto message = qFormatLogMessage(type, context, msg);
+        guiLogWindow->appendPlainText(message);
+    }
+    if (defaultMessageHandler)
+    {
+        (*defaultMessageHandler)(type, context, msg);
+    }
+}
+
+void MainWindow::onCheckShowDebugOutputChanged(int state)
+{
+    if (state == Qt::CheckState::Checked)
+    {
+        ui->debugOutputText->clear();
+        ui->debugOutputText->show();
+        guiLogWindow = ui->debugOutputText;
+        defaultMessageHandler = qInstallMessageHandler(logToGui);
+    }
+    else
+    {
+        ui->debugOutputText->hide();
+        qInstallMessageHandler(defaultMessageHandler);
+        guiLogWindow = nullptr;
+        defaultMessageHandler = nullptr;
+    }
 }
